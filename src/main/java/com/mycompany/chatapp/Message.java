@@ -144,7 +144,7 @@ public final class Message {
         }
     }
 
-    // Load stored messages (simulating ChatGPT assistance)
+    // Load stored messages (ChatGPT assistance)
     public static void loadStoredMessagesFromFiles() {
         storedMessages.clear();
         java.io.File currentDir = new java.io.File(".");
@@ -202,7 +202,7 @@ public final class Message {
         }
     }
 
-    // Core logic to collect, validate, and send/store messages
+    // collect, validate, and send/store messages
     public static void sendMessages() {
         // Ask how many messages user wants to send
         String input = JOptionPane.showInputDialog("Enter number of messages to send:");
@@ -301,7 +301,7 @@ public final class Message {
     
     
     
-        // The menu to show sent messages and other Part 3 features
+        // The menu to show sent messages and other features
     public static void showSentMessagesMenu() {
         String menu = "Choose a report option:\n"
                 + "1) Display sender and recipient of all sent messages\n"
@@ -341,7 +341,7 @@ public final class Message {
         }
     }
     
-        // 1) Display sender (assumed developer here) and recipient of all sent messages
+        // 1) Display sender and recipient of all sent messages
     public static void displaySenderAndRecipient() {
         if (sentMessages.isEmpty()) {
             JOptionPane.showMessageDialog(null, "No sent messages to display.");
