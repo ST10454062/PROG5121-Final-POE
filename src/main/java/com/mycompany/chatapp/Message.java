@@ -348,7 +348,7 @@ public final class Message {
 
         StringBuilder sb = new StringBuilder("Sender and Recipient of Sent Messages:\n");
         for (Message m : sentMessages) {
-            sb.append("Sender: Developer\nRecipient: ").append(m.getRecipient()).append("\n\n");
+            sb.append("Sender: Me\nRecipient: ").append(m.getRecipient()).append("\n\n");
         }
         JOptionPane.showMessageDialog(null, sb.toString());
     }
