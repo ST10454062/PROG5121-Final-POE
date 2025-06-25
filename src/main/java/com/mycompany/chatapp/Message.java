@@ -24,7 +24,7 @@ public final class Message {
     public static int totalMessagesSent = 0;
     public static List<Message> messageList = new ArrayList<>();
 
-    // Part 3 arrays
+    // POE arrays
     public static List<Message> sentMessages = new ArrayList<>();
     public static List<Message> disregardedMessages = new ArrayList<>();
     public static List<Message> storedMessages = new ArrayList<>();
@@ -36,8 +36,6 @@ public final class Message {
     private final String recipient;
     private final String message;
     private final String messageHash;
-    
-    private static Login login;
     
 
     // Constructor initializes the message and generates ID and hash
@@ -350,8 +348,7 @@ public final class Message {
 
         StringBuilder sb = new StringBuilder("Sender and Recipient of Sent Messages:\n");
         for (Message m : sentMessages) {
-            sb.append("Sender: ").append(login.getRegisteredPhoneNumber())
-              .append("\nRecipient: ").append(m.getRecipient()).append("\n\n");
+            sb.append("Sender: Developer\nRecipient: ").append(m.getRecipient()).append("\n\n");
         }
         JOptionPane.showMessageDialog(null, sb.toString());
     }
