@@ -36,6 +36,9 @@ public final class Message {
     private final String recipient;
     private final String message;
     private final String messageHash;
+    
+    private static Login login;
+    
 
     // Constructor initializes the message and generates ID and hash
     public Message(int messageNumber, String recipient, String message) {
@@ -122,47 +125,42 @@ public final class Message {
         return gson.fromJson(json, Message.class);
     }
     
-    // Stores the current message object to a JSON file
+    // Store to file
     public boolean writeMessageToFile(String fileName) {
-        Gson gson = new Gson(); 
-        try (FileWriter writer = new FileWriter(fileName)) {
-                writer.write(gson.toJson(this));
-                return true;
-        } catch (IOException e) {
+        try (java.io.FileWriter writer = new java.io.FileWriter(fileName)) {
+            writer.write(toJson());
+            return true;
+        } catch (java.io.IOException e) {
+            JOptionPane.showMessageDialog(null, "Error saving message: " + e.getMessage());
             return false;
         }
     }
     
-    // Wrapper with GUI – use only inside runApp()
+     // Store with dialog
     public void storeMessageToFileWithDialog() {
         String fileName = "message_" + messageID + ".json";
         if (writeMessageToFile(fileName)) {
-            JOptionPane.showMessageDialog(null, "Message stored to file:\n" + fileName);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error saving message.");
+            JOptionPane.showMessageDialog(null, "Message stored to: " + fileName);
         }
     }
-    
-    
-        // Reads all stored messages from JSON files in current directory
-    public static void loadStoredMessagesFromFiles() {
-        storedMessages.clear(); // Clear old list
-        File currentDir = new File(".");
-        File[] files = currentDir.listFiles((dir, name) -> name.matches("message_\\d{10}\\.json"));
 
+    // Load stored messages (simulating ChatGPT assistance)
+    public static void loadStoredMessagesFromFiles() {
+        storedMessages.clear();
+        java.io.File currentDir = new java.io.File(".");
+        java.io.File[] files = currentDir.listFiles((dir, name) -> name.matches("message_\\d{10}\\.json"));
         if (files != null) {
             Gson gson = new Gson();
-            for (File file : files) {
-                try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            for (java.io.File file : files) {
+                try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(file))) {
                     Message m = gson.fromJson(br, Message.class);
-                    if (m != null) {
-                        storedMessages.add(m);
-                    }
-                } catch (IOException e) {
-                    
+                    if (m != null) storedMessages.add(m);
+                } catch (java.io.IOException e) {
+                    JOptionPane.showMessageDialog(null, "Error reading file: " + e.getMessage());
                 }
             }
         }
+        // JSON parsing logic inspired by ChatGPT guidance for file handling.
     }
     
     
@@ -352,8 +350,8 @@ public final class Message {
 
         StringBuilder sb = new StringBuilder("Sender and Recipient of Sent Messages:\n");
         for (Message m : sentMessages) {
-            // Assuming "developer" as sender for test data; else could add sender field if needed
-            sb.append("Sender: Developer\nRecipient: ").append(m.getRecipient()).append("\n\n");
+            sb.append("Sender: ").append(login.getRegisteredPhoneNumber())
+              .append("\nRecipient: ").append(m.getRecipient()).append("\n\n");
         }
         JOptionPane.showMessageDialog(null, sb.toString());
     }
@@ -459,11 +457,4 @@ public final class Message {
         }
         JOptionPane.showMessageDialog(null, report.toString());
     }
-    
-    
-    
-    
 }
-
-    
-    
